@@ -1,35 +1,50 @@
-import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import React, { useReducer } from "react";
+import { Link, useNavigate } from 'react-router-dom';
 import validation from "../helper/form-validation";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
+import api from "../api/api";
 
 function Login() {
-  const [password, setPassword] = useState("");
-  const [email, setEmail] = useState("");
-  const [passwordError, setpasswordError] = useState("");
-  const [emailError, setemailError] = useState("");
+    const [inputType, setInputType] = useReducer(
+        (oldInputType, newInputType) => ({...oldInputType, ...newInputType}),
+        {
+            password: "",
+            email: ""
+        }
+    );
 
+    const [errorType, setErrorType] = useReducer(
+    (oldErrorType, newErrorType) => ({...oldErrorType, ...newErrorType}),
+    {
+        password: "",
+        email: ""
+    }
+    );
+
+  const navigate = useNavigate();
 
   const submit = (e) => {
     e.preventDefault();
-    
+    const {email, password} = inputType;
     const {valid, errors} = validation(email, password);
     if(!valid) {
         if(errors.email) {
-            setemailError(errors.email);
+            setErrorType({email: errors.email});
         }else{
-            setemailError("")
+            setErrorType({email: ''});
         }
         if(errors.password) {
-            setpasswordError(errors.password);
+            setErrorType({password: errors.password});;
         }else{
-            setpasswordError("")
+            setErrorType({password: ''});
         }
         return;
     }
     // sure valid so submit
-    // @todo submit 
+    api.login({email, password}).then(response=>{
+        navigate("/");
+    });
   };
 
   return (
@@ -39,16 +54,16 @@ function Login() {
             <form>
                 <div className="email">
                     <FontAwesomeIcon icon={faEnvelope} />
-                    <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="Email"/>
+                    <input type="email" value={inputType.email} onChange={(e)=>setInputType({email: e.target.value})} placeholder="Email"/>
                     <p className="error">
-                        {emailError}
+                        {errorType.email}
                     </p>
                 </div>
                 <div className="passowrd">
                     <FontAwesomeIcon icon={faLock} />
-                    <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="Password"/>
+                    <input type="password" value={inputType.password} onChange={(e)=>setInputType({password: e.target.value})} placeholder="Password"/>
                     <p className="error">
-                        {passwordError}
+                        {errorType.password}
                     </p>
                 </div>
                 <div className="action">

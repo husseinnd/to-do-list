@@ -1,37 +1,52 @@
-import React, { useState } from "react";
-import { Link } from 'react-router-dom';
+import React, { useReducer } from "react";
+import { Link, useNavigate } from 'react-router-dom';
+import api from "../api/api";
 import validation from "../helper/form-validation";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEnvelope, faCalendar } from '@fortawesome/free-solid-svg-icons';
 
 function Register() {
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [email, setEmail] = useState("");
-  const [passwordError, setpasswordError] = useState("");
-  const [emailError, setemailError] = useState("");
+  const [inputType, setInputType] = useReducer(
+    (oldInputType, newInputType) => ({...oldInputType, ...newInputType}),
+    {
+      password: "",
+      name: "",
+      age: "",
+      email: ""
+    }
+  );
 
+  const [errorType, setErrorType] = useReducer(
+    (oldErrorType, newErrorType) => ({...oldErrorType, ...newErrorType}),
+    {
+      password: "",
+      email: ""
+    }
+  );
+
+  const navigate = useNavigate();
 
   const submit = (e) => {
     e.preventDefault();
-    
+    const {name, email, password, age} = inputType;
     const {valid, errors} = validation(email, password);
     if(!valid) {
         if(errors.email) {
-            setemailError(errors.email);
+          setErrorType({email: errors.email});
         }else{
-            setemailError("")
+          setErrorType({email: ""});
         }
         if(errors.password) {
-            setpasswordError(errors.password);
+          setErrorType({password: errors.password});
         }else{
-            setpasswordError("")
+          setErrorType({password: ""});
         }
         return;
     }
     // sure valid so submit
-    // @todo submit 
+    api.register({name, email, password, age}).then(response=>{
+      navigate("/");
+    });
   };
 
   return (
@@ -41,24 +56,24 @@ function Register() {
             <form>
                 <div className="name">
                     <FontAwesomeIcon icon={faUser} />
-                    <input type="text" value={name} onChange={(e)=>setName(e.target.value)} placeholder="Full Name" />
+                    <input type="text" value={inputType.name} onChange={(e)=>setInputType({name: e.target.value})} placeholder="Full Name" />
                 </div>
                 <div className="age">
                     <FontAwesomeIcon icon={faCalendar} />
-                    <input type="number" value={age} onChange={(e)=>setAge(e.target.value)} placeholder="Age" />
+                    <input type="number" value={inputType.age} onChange={(e)=>setInputType({age: e.target.value})} placeholder="Age" />
                 </div>
                 <div className="email">
                     <FontAwesomeIcon icon={faEnvelope} />
-                    <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="Email" />
+                    <input type="email" value={inputType.email} onChange={(e)=>setInputType({email: e.target.value})} placeholder="Email" />
                     <p className="error">
-                        {emailError}
+                        {errorType.email}
                     </p>
                 </div>
                 <div className="passowrd">
                     <FontAwesomeIcon icon={faLock} />
-                    <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="Password" />
+                    <input type="password" value={inputType.password} onChange={(e)=>setInputType({password: e.target.value})} placeholder="Password" />
                     <p className="error">
-                        {passwordError}
+                        {errorType.password}
                     </p>
                 </div>
                 <div className="action">
