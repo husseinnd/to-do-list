@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from "../api/auth";
+import { useAuth } from "../auth/auth";
 import validation from "../helper/form-validation";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEnvelope, faCalendar } from '@fortawesome/free-solid-svg-icons';

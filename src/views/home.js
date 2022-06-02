@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from "../api/auth";
+import { useAuth } from "../auth/auth";
 
 function Home() {
     const navigate = useNavigate();

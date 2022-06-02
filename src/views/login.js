@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { useAuth } from "../api/auth";
+import { useAuth } from "../auth/auth";
 import { Link, useNavigate } from 'react-router-dom';
 import validation from "../helper/form-validation";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

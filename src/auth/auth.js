@@ -5,6 +5,8 @@ import { createContext, useContext, useState} from 'react';
 const AuthContext = createContext(null)
 
 export const AuthProvider = ({ children }) => {
+    const [isAuthenticated, setIsAuthenticated] = useState(localStorage["access_token"]? true : false);
+
     //creating axios instance for api calls
     const instance = axios.create({
         baseURL: 'https://api-nodejs-todolist.herokuapp.com/',
@@ -18,8 +20,7 @@ export const AuthProvider = ({ children }) => {
         localStorage["access_token"] = value;
         setIsAuthenticated(value? true : false);
     }
-
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    
 
     const login = async (data) => {
         return await new Promise((resolve, reject)=>{
