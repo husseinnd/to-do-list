@@ -1,9 +1,9 @@
 import React, { useReducer } from "react";
+import { useAuth } from "../api/auth";
 import { Link, useNavigate } from 'react-router-dom';
 import validation from "../helper/form-validation";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
-import api from "../api/api";
 
 function Login() {
     const [inputType, setInputType] = useReducer(
@@ -23,6 +23,7 @@ function Login() {
     );
 
   const navigate = useNavigate();
+  const auth = useAuth();
 
   const submit = (e) => {
     e.preventDefault();
@@ -42,7 +43,7 @@ function Login() {
         return;
     }
     // sure valid so submit
-    api.login({email, password}).then(response=>{
+    auth.login({email, password}).then(response=>{
         navigate("/");
     });
   };

@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 import { Link, useNavigate } from 'react-router-dom';
-import api from "../api/api";
+import { useAuth } from "../api/auth";
 import validation from "../helper/form-validation";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLock, faEnvelope, faCalendar } from '@fortawesome/free-solid-svg-icons';
@@ -25,7 +25,8 @@ function Register() {
   );
 
   const navigate = useNavigate();
-
+  const auth = useAuth();
+  
   const submit = (e) => {
     e.preventDefault();
     const {name, email, password, age} = inputType;
@@ -44,7 +45,7 @@ function Register() {
         return;
     }
     // sure valid so submit
-    api.register({name, email, password, age}).then(response=>{
+    auth.register({name, email, password, age}).then(response=>{
       navigate("/");
     });
   };
