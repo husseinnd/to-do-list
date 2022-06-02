@@ -52,36 +52,36 @@ function Register() {
 
   return (
     <div className="register-page">
-        <div className="register-form">
+        <div className="form-container">
             <h2 className="form-title">User register</h2>
             <form>
-                <div className="name">
+                <div className="name form-elt">
                     <FontAwesomeIcon icon={faUser} />
                     <input type="text" value={inputType.name} onChange={(e)=>setInputType({name: e.target.value})} placeholder="Full Name" />
                 </div>
-                <div className="age">
+                <div className="age form-elt">
                     <FontAwesomeIcon icon={faCalendar} />
                     <input type="number" value={inputType.age} onChange={(e)=>setInputType({age: e.target.value})} placeholder="Age" />
                 </div>
-                <div className="email">
+                <div className="email form-elt">
                     <FontAwesomeIcon icon={faEnvelope} />
                     <input type="email" value={inputType.email} onChange={(e)=>setInputType({email: e.target.value})} placeholder="Email" />
                     <p className="error">
                         {errorType.email}
                     </p>
                 </div>
-                <div className="passowrd">
+                <div className="passowrd form-elt">
                     <FontAwesomeIcon icon={faLock} />
                     <input type="password" value={inputType.password} onChange={(e)=>setInputType({password: e.target.value})} placeholder="Password" />
                     <p className="error">
                         {errorType.password}
                     </p>
                 </div>
-                <div className="action">
+                <div className="form-action">
                     <button onClick={submit} type="submit">register</button>
                 </div>
             </form>
-            <div className="login-container">
+            <div className="form-links">
                 <Link to={"/login"} className="login">Already Have an Account?</Link>
             </div>
         </div>

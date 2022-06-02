@@ -50,28 +50,28 @@ function Login() {
 
   return (
     <div className="login-page">
-        <div className="login-form">
+        <div className="form-container">
             <h2 className="form-title">User Login</h2>
             <form>
-                <div className="email">
+                <div className="email form-elt">
                     <FontAwesomeIcon icon={faEnvelope} />
                     <input type="email" value={inputType.email} onChange={(e)=>setInputType({email: e.target.value})} placeholder="Email"/>
                     <p className="error">
                         {errorType.email}
                     </p>
                 </div>
-                <div className="passowrd">
+                <div className="passowrd form-elt">
                     <FontAwesomeIcon icon={faLock} />
                     <input type="password" value={inputType.password} onChange={(e)=>setInputType({password: e.target.value})} placeholder="Password"/>
                     <p className="error">
                         {errorType.password}
                     </p>
                 </div>
-                <div className="action">
+                <div className="form-action">
                     <button onClick={submit} type="submit">Login</button>
                 </div>
             </form>
-            <div className="register-container">
+            <div className="form-links">
                 <Link to={"/register"} className="register">Don't Have an Account?</Link>
             </div>
         </div>
