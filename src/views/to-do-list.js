@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState, useReducer, useRef } from "react";
+import { useEffect, useState, useReducer, useRef, Fragment } from "react";
 import { useAuth } from "../api/auth";
 import { useToDo } from "../api/todo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -234,16 +234,22 @@ function ToDoList() {
         </div>
         <div>
           {renderCreateTask()}
-          <div className="sort-container">
-            <span>
-              Sort by:{" "}
-              <strong onClick={() => updateSortBy()}>
-                {sortedBy.split("-").join(" ")}
-              </strong>
-            </span>
-          </div>
-          {renderTasks()}
-          {renderFilters()}
+          {todo.list.length ? (
+            <Fragment>
+              <div className="sort-container">
+                <span>
+                  Sort by:{" "}
+                  <strong onClick={() => updateSortBy()}>
+                    {sortedBy.split("-").join(" ")}
+                  </strong>
+                </span>
+              </div>
+              {renderTasks()}
+              {renderFilters()}
+            </Fragment>
+          ) : (
+            <Fragment></Fragment>
+          )}
         </div>
       </div>
     </div>
