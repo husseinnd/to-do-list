@@ -15,6 +15,7 @@ a{
         color: $purple;
     }
 }
+
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: $grey;
     opacity: 1; /* Firefox */
@@ -33,7 +34,6 @@ input:-webkit-autofill:active  {
   -webkit-box-shadow: 0 0 0 30px $navy inset;
   -webkit-text-fill-color: $grey;
 }
-
 input {
     &[type="text"], 
     &[type="email"],
