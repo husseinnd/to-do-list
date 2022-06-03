@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;700&display=swap');
+body {
+    font-family: $family;
+    font-size: 14px;
+    font-weight: 300;
+    color: $grey;
+    background-color: $black;
+}
+
+a{
+    text-decoration: none;
+    color: $blue;
+    transition: 0.2s ease-in color;
+    &:hover {
+        color: $purple;
+    }
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: $grey;
+    opacity: 1; /* Firefox */
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: $grey;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: $grey;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+  -webkit-box-shadow: 0 0 0 30px $navy inset;
+  -webkit-text-fill-color: $grey;
+}
+input {
+    &[type="text"], 
+    &[type="email"],
+    &[type="number"],
+    &[type="password"]{
+        height: 20px;
+        &, &:focus, &:hover, &:active{
+            background: $navy;
+            color: $grey;
+            border: none;
+            outline: none;
+        }
+    }
+}
+
+button {
+    font-family: $family;
+    font-weight: 500;
+    background-color: $purple;
+    color: $white;
+    text-transform: uppercase;
+    padding: 8px 15px;
+    border-radius: 8px;
+    border:unset;
+    cursor: pointer;
+    transition: 0.2s ease-in color, 0.2s ease-in background-color;
+    &:hover{
+        color: $navy;
+        background-color: $grey;
+    }
+}
+
+.form{
+    &-container {
+        padding: 2em;
+        background-color: $navy;
+        max-width: 500px;
+        border-radius: 8px;
+        margin: 100px auto 0;
+    }
+    &-title{
+        text-align: center;
+        margin-top: 0;
+        margin-bottom: 1em;
+    }
+    &-elt{
+        margin-bottom: 15px;
+        svg {
+            margin-right: 10px;
+            width: 10%;
+        }
+        input{
+            width: calc(90% - 20px);
+        }
+    }
+    &-action{
+        margin-bottom: 15px;
+    }
+    &-action, &-links{
+        display: flex;
+        justify-content: center;
+    }
+    
+}
