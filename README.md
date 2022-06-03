@@ -8,6 +8,8 @@
 
 ### Features
 
+- Authentication is required
+- [api integration](https://documenter.getpostman.com/view/8858534/SW7dX7JG#83f03f13-598d-4790-80be-f40050d3f0f1)
 - login and register fields are validated
 
   > check the below screenshots:
