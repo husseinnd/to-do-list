@@ -19,10 +19,15 @@
   > ![Register Page](./read-me-assets/register-validation.png)
 
 - To do list
+
   > 1- Adds, edits and deletes tasks
+  >
   > 2- Filter by all, completed and active tasks
+  >
   > 3- Sort tasks by creation date, A to Z and Z to A
+  >
   > 4- Mark tasks as complete or incomplete
+  >
   > check the below screenshots:
 
 ![Tasks Empty Page](./read-me-assets/tasks-empty.png)  
