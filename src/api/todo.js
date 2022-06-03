@@ -31,9 +31,10 @@ export const ToDoProvider = ({ children }) => {
 
   const del = async (id) => {
     return await instance.delete(id).then((response) => {
-      // setList([...list, response.data.data]);
-      //@todo remove the deleted task from the list using the id
-      console.log(response);
+      const filterOutDeletedItem = list.filter((item) => {
+        return item._id !== id;
+      });
+      setList([...filterOutDeletedItem]);
     });
   };
 
@@ -41,13 +42,12 @@ export const ToDoProvider = ({ children }) => {
     return await instance.put(id, data).then((response) => {
       const updatedData = response.data.data;
       const itemIndex = list.findIndex((item) => {
-        return id === item.id;
+        return id === item._id;
       });
-      //   list[itemIndex] = updatedData;
-      //@todo list not updating
-      const tempList = [...list];
-      tempList[itemIndex] = updatedData;
-      setList(tempList);
+      if (itemIndex > -1) {
+        list[itemIndex] = updatedData;
+        setList([...list]);
+      }
     });
   };
 
