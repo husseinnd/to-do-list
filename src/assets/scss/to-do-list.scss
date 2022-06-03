@@ -34,6 +34,10 @@
                     width: 6%;
                     margin-right: 10px;
                     transition: 0.5s ease color;
+                    cursor: pointer;
+                    &:hover{
+                        color: $purple;
+                    }
                     &.completed{
                         color: $blue;
                     }
@@ -65,6 +69,38 @@
                     input{
                         background-color: $grey2;
                     }
+                }
+            }
+        }
+        .filters-container{
+            margin-top: 15px;
+            font-weight: 400;
+            span{
+                margin-right: 10px;
+                transition: 0.4s ease color;
+                text-transform: capitalize;
+                display: inline-block;
+                cursor: pointer;
+                &:hover{
+                    color: $purple;
+                }
+                &.active { 
+                    color: $blue;
+                    font-weight: bold;
+                }
+            }
+        }
+        .sort-container{
+            margin-bottom: 10px;
+            span{
+                strong{
+                    cursor: pointer;
+                    color: $blue;
+                    transition: 0.5s ease color;
+                    &:hover{
+                        color: $purple;
+                    }
+                    text-transform: capitalize;
                 }
             }
         }
