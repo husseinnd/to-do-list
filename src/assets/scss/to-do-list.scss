@@ -1,0 +1,72 @@
+.to-do-list{
+    &-container{
+        width: 500px;
+            margin: 100px auto 0;
+        .container-header{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .add-task{
+            background-color: $navy;
+            margin-bottom: 20px;
+            padding: 1em;
+            border-radius: 8px;
+            svg {
+                margin-right: 10px;
+                width: 6%;
+            }
+        }
+        .tasks-container{
+            background-color: $navy;
+            border-radius: 8px;
+            overflow: hidden;
+            svg {
+                margin-right: 10px;
+                width: 100%;
+            }
+            .task-row{
+                display: flex;
+                align-items: center;
+                padding: 1em ;
+                border-bottom: 3px solid $black;
+                .completed-status{
+                    width: 6%;
+                    margin-right: 10px;
+                    transition: 0.5s ease color;
+                    &.completed{
+                        color: $blue;
+                    }
+                }
+                input{
+                    transition: 0.5s ease background-color;
+                    width: 80%;
+                    &[disabled]{
+                        cursor: auto;
+                    }
+                }
+                .task-actions{
+                    display: flex;
+                    align-items: center;
+                    svg{
+                        color:$blue;
+                        transition: 0.2s ease-in color;
+                        cursor: pointer;
+                        padding: 5px 0;
+                        &:hover{
+                            color:$purple;
+                        }
+                    }
+                }
+
+                transition: 0.5s ease background-color;
+                &.edit-mode{
+                    background-color: $grey2;
+                    input{
+                        background-color: $grey2;
+                    }
+                }
+            }
+        }
+    }
+}
