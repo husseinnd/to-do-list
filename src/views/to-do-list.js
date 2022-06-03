@@ -73,7 +73,9 @@ function ToDoList() {
 
   //function to del tasks
   const deleteTask = (id) => {
-    todo.del(id);
+    if (window.confirm("Are you sure you want to delete?")) {
+      todo.del(id);
+    }
   };
 
   //this is to render the to do list tasks.
