@@ -29,6 +29,14 @@ export const ToDoProvider = ({ children }) => {
     });
   };
 
+  const del = async (id) => {
+    return await instance.delete(id).then((response) => {
+      // setList([...list, response.data.data]);
+      //@todo remove the deleted task from the list using the id
+      console.log(response);
+    });
+  };
+
   const update = async (id, data) => {
     return await instance.put(id, data).then((response) => {
       const updatedData = response.data.data;
@@ -36,6 +44,7 @@ export const ToDoProvider = ({ children }) => {
         return id === item.id;
       });
       //   list[itemIndex] = updatedData;
+      //@todo list not updating
       const tempList = [...list];
       tempList[itemIndex] = updatedData;
       setList(tempList);
@@ -49,6 +58,7 @@ export const ToDoProvider = ({ children }) => {
         getAll,
         add,
         update,
+        del,
       }}
     >
       {children}
