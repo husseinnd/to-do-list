@@ -23,9 +23,22 @@ export const ToDoProvider = ({ children }) => {
     });
   };
 
-  const add = async (description) => {
-    return await instance.post("", { description }).then((response) => {
+  const add = async (data) => {
+    return await instance.post("", data).then((response) => {
       setList([...list, response.data.data]);
+    });
+  };
+
+  const update = async (id, data) => {
+    return await instance.put(id, data).then((response) => {
+      const updatedData = response.data.data;
+      const itemIndex = list.findIndex((item) => {
+        return id === item.id;
+      });
+      //   list[itemIndex] = updatedData;
+      const tempList = [...list];
+      tempList[itemIndex] = updatedData;
+      setList(tempList);
     });
   };
 
@@ -35,6 +48,7 @@ export const ToDoProvider = ({ children }) => {
         list,
         getAll,
         add,
+        update,
       }}
     >
       {children}
