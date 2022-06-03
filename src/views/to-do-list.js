@@ -17,6 +17,8 @@ function ToDoList() {
   const todo = useToDo();
   const taskInputRefs = useRef([]);
   const [addTaskInput, setAddTaskInput] = useState("");
+  const [filter, setFilter] = useState("all");
+  const [sortedBy, setSortedBy] = useState("created-date");
   const [editMode, setEditMode] = useReducer(
     (editMode, newEditMode) => ({ ...editMode, ...newEditMode }),
     {
@@ -64,50 +66,68 @@ function ToDoList() {
     });
   };
 
+  //function to update completion status
+  const updateCompletion = (id, completed) => {
+    todo.update(id, { completed: !completed });
+  };
+
+  //function to del tasks
+  const deleteTask = (id) => {
+    todo.del(id);
+  };
+
   //this is to render the to do list tasks.
   const renderTasks = () => {
     return (
       <div className="tasks-container">
-        {todo.list.map(({ completed, description, _id: id }, i) => {
-          const isEditMode = editMode.id === id;
-          return (
-            <div
-              key={`to-do-list-item-${i}`}
-              className={`task-row ${isEditMode ? "edit-mode" : ""}`}
-            >
-              <span
-                className={`completed-status ${completed ? "completed" : ""}`}
+        {sortList(filterList(todo.list)).map(
+          ({ completed, description, _id: id }, i) => {
+            const isEditMode = editMode.id === id;
+            return (
+              <div
+                key={`to-do-list-item-${i}`}
+                className={`task-row ${isEditMode ? "edit-mode" : ""}`}
               >
-                <FontAwesomeIcon icon={!completed ? faCircle : faCircleCheck} />
-              </span>
-              <input
-                type="text"
-                className="task-desc"
-                value={isEditMode ? editMode.text : description}
-                ref={(el) => (taskInputRefs.current[i] = el)}
-                onKeyDown={(e) => editTask(e, description)}
-                onChange={(e) => setEditMode({ text: e.target.value })}
-                disabled={isEditMode ? !editMode.isEdit : true}
-              />
-              <div className="task-actions">
-                <span>
+                <span
+                  className={`completed-status ${completed ? "completed" : ""}`}
+                  onClick={(e) => updateCompletion(id, completed)}
+                >
                   <FontAwesomeIcon
-                    icon={faPencil}
-                    onClick={(e) => {
-                      setEditMode({ id, isEdit: true, text: description });
-                      setTimeout(() => {
-                        taskInputRefs.current[i].focus();
-                      }, 0);
-                    }}
+                    icon={!completed ? faCircle : faCircleCheck}
                   />
                 </span>
-                <span>
-                  <FontAwesomeIcon icon={faTrash} />
-                </span>
+                <input
+                  type="text"
+                  className="task-desc"
+                  value={isEditMode ? editMode.text : description}
+                  ref={(el) => (taskInputRefs.current[i] = el)}
+                  onKeyDown={(e) => editTask(e, description)}
+                  onChange={(e) => setEditMode({ text: e.target.value })}
+                  disabled={isEditMode ? !editMode.isEdit : true}
+                />
+                <div className="task-actions">
+                  <span>
+                    <FontAwesomeIcon
+                      icon={faPencil}
+                      onClick={(e) => {
+                        setEditMode({ id, isEdit: true, text: description });
+                        setTimeout(() => {
+                          taskInputRefs.current[i].focus();
+                        }, 0);
+                      }}
+                    />
+                  </span>
+                  <span>
+                    <FontAwesomeIcon
+                      icon={faTrash}
+                      onClick={(e) => deleteTask(id)}
+                    />
+                  </span>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          }
+        )}
       </div>
     );
   };
@@ -116,6 +136,7 @@ function ToDoList() {
   const addOnEnter = (e) => {
     if (e.key === "Enter") {
       todo.add({ description: addTaskInput });
+      setAddTaskInput("");
     }
   };
 
@@ -135,6 +156,73 @@ function ToDoList() {
     );
   };
 
+  //function to render filters for the tasks
+  const renderFilters = () => {
+    const filtersArr = ["all", "active", "completed"];
+    return (
+      <div className="filters-container">
+        {filtersArr.map((item, i) => {
+          return (
+            <span
+              key={`filter-${i}`}
+              className={item === filter ? "active" : ""}
+              onClick={() => {
+                setFilter(item);
+              }}
+            >
+              {item}
+            </span>
+          );
+        })}
+      </div>
+    );
+  };
+
+  const filterList = (list) => {
+    // return filtered list
+    switch (filter) {
+      default:
+      case "all":
+        return list;
+      case "active":
+        return list.filter((item) => {
+          return item.completed === false;
+        });
+      case "completed":
+        return list.filter((item) => {
+          return item.completed === true;
+        });
+    }
+  };
+
+  const sortList = (list) => {
+    switch (sortedBy) {
+      default:
+      case "created-date":
+        return list.sort(function (a, b) {
+          return new Date(a.createdAt) - new Date(b.createdAt);
+        });
+      case "a-to-z":
+        return list.sort(function (a, b) {
+          return a.description
+            .toLowerCase()
+            .localeCompare(b.description.toLowerCase());
+        });
+      case "z-to-a":
+        return list.sort(function (a, b) {
+          return b.description
+            .toLowerCase()
+            .localeCompare(a.description.toLowerCase());
+        });
+    }
+  };
+
+  const updateSortBy = () => {
+    const sortArr = ["created-date", "a-to-z", "z-to-a"];
+    const sortedByIndex = (sortArr.indexOf(sortedBy) + 1) % 3;
+    setSortedBy(sortArr[sortedByIndex]);
+  };
+
   return (
     <div className="to-do-list">
       <div className="to-do-list-container">
@@ -144,7 +232,16 @@ function ToDoList() {
         </div>
         <div>
           {renderCreateTask()}
+          <div className="sort-container">
+            <span>
+              Sort by:{" "}
+              <strong onClick={() => updateSortBy()}>
+                {sortedBy.split("-").join(" ")}
+              </strong>
+            </span>
+          </div>
           {renderTasks()}
+          {renderFilters()}
         </div>
       </div>
     </div>
