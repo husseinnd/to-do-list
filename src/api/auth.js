@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
 
   //creating axios instance for api calls
   const instance = axios.create({
-    baseURL: "https://api-nodejs-todolist.herokuapp.com/",
+    baseURL: "https://api-nodejs-todolist.herokuapp.com/user/",
     headers: {
       "content-type": "application/json",
       Authorization: localStorage["access_token"]
@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (data) => {
     return await new Promise((resolve, reject) => {
-      instance.post(`user/login`, data).then(
+      instance.post(`login`, data).then(
         (response) => {
           alert("loggedin Successfully");
           setToken(response.data.token);
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (data) => {
     return await new Promise((resolve, reject) => {
-      instance.post(`user/register`, data).then(
+      instance.post(`register`, data).then(
         (response) => {
           alert("Registered Successfully");
           setToken(response.data.token);
@@ -57,7 +57,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    return await instance.post(`user/logout`).then((response) => {
+    return await instance.post(`logout`).then((response) => {
       alert("loggedout successfully");
       setToken("");
     });

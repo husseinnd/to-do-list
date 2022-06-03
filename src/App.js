@@ -3,8 +3,9 @@ import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
 import Login from "./views/login.js";
 import Register from "./views/register";
 import ToDoList from "./views/to-do-list.js";
-import { AuthProvider } from "./auth/auth";
-import { ProtectRoutes } from "./auth/protectRoutes";
+import { AuthProvider } from "./api/auth";
+import { ProtectRoutes } from "./components/protectRoutes";
+import { ToDoProvider } from "./api/todo";
 
 function App() {
   return (
@@ -16,7 +17,9 @@ function App() {
               path="/to-do-list"
               element={
                 <ProtectRoutes>
-                  <ToDoList />
+                  <ToDoProvider>
+                    <ToDoList />
+                  </ToDoProvider>
                 </ProtectRoutes>
               }
             />
