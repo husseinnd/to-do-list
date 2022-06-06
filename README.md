@@ -1,7 +1,5 @@
 # To Do List
 
-[Click here to see working demo](https://husseinnd.github.io/to-do-list/)
-
 ### Pages
 
 - login page
